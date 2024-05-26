@@ -2,9 +2,9 @@
 
 pragma solidity 0.8.19;
 
-import {DeployFundMe} from "../script/DeployFundMe.s.sol";
-import {FundMe} from "../src/FundMe.sol";
-import {HelperConfig} from "../script/HelperConfig.s.sol";
+import {DeployFundMe} from "../../script/DeployFundMe.s.sol";
+import {FundMe} from "../../src/FundMe.sol";
+import {HelperConfig} from "../../script/HelperConfig.s.sol";
 import {Test, console} from "forge-std/Test.sol";
 import {StdCheats} from "forge-std/StdCheats.sol";
 
@@ -28,7 +28,7 @@ contract FundMeTest is StdCheats, Test {
         vm.deal(USER, STARTING_USER_BALANCE);
     }
 
-    function testPriceFeedSetCorrectly() public {
+    function testPriceFeedSetCorrectly() public view{
         address retreivedPriceFeed = address(fundMe.getPriceFeed());
         // (address expectedPriceFeed) = helperConfig.activeNetworkConfig();
         address expectedPriceFeed = helperConfig.activeNetworkConfig();
@@ -79,7 +79,7 @@ contract FundMeTest is StdCheats, Test {
 
         // vm.txGasPrice(GAS_PRICE);
         // uint256 gasStart = gasleft();
-        // // Act
+        // // Action
         vm.startPrank(fundMe.getOwner());
         fundMe.withdraw();
         vm.stopPrank();
@@ -94,7 +94,7 @@ contract FundMeTest is StdCheats, Test {
         assertEq(
             startingFundMeBalance + startingOwnerBalance,
             endingOwnerBalance // + gasUsed
-        );
+        ); 
     }
 
     // Can we do our withdraw function a cheaper way?
